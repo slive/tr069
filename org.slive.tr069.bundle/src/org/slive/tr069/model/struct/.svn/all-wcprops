@@ -1,0 +1,101 @@
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/numax/!svn/ver/3996/nms/com.genew.nms/nms/tr069-interfaces/src/main/java/com/genew/nms/tr069/model/struct
+END
+ParameterValueStructDateTime.java
+K 25
+svn:wc:ra_dav:version-url
+V 144
+/svn/numax/!svn/ver/3719/nms/com.genew.nms/nms/tr069-interfaces/src/main/java/com/genew/nms/tr069/model/struct/ParameterValueStructDateTime.java
+END
+ParameterInfoStruct.java
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/svn/numax/!svn/ver/3811/nms/com.genew.nms/nms/tr069-interfaces/src/main/java/com/genew/nms/tr069/model/struct/ParameterInfoStruct.java
+END
+SetParameterAttributesStruct.java
+K 25
+svn:wc:ra_dav:version-url
+V 144
+/svn/numax/!svn/ver/3851/nms/com.genew.nms/nms/tr069-interfaces/src/main/java/com/genew/nms/tr069/model/struct/SetParameterAttributesStruct.java
+END
+AbstractStruct.java
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn/numax/!svn/ver/3719/nms/com.genew.nms/nms/tr069-interfaces/src/main/java/com/genew/nms/tr069/model/struct/AbstractStruct.java
+END
+ParameterValueStructObject.java
+K 25
+svn:wc:ra_dav:version-url
+V 142
+/svn/numax/!svn/ver/3719/nms/com.genew.nms/nms/tr069-interfaces/src/main/java/com/genew/nms/tr069/model/struct/ParameterValueStructObject.java
+END
+ParameterAttributeStruct.java
+K 25
+svn:wc:ra_dav:version-url
+V 140
+/svn/numax/!svn/ver/3672/nms/com.genew.nms/nms/tr069-interfaces/src/main/java/com/genew/nms/tr069/model/struct/ParameterAttributeStruct.java
+END
+ParameterValueStructStr.java
+K 25
+svn:wc:ra_dav:version-url
+V 139
+/svn/numax/!svn/ver/3719/nms/com.genew.nms/nms/tr069-interfaces/src/main/java/com/genew/nms/tr069/model/struct/ParameterValueStructStr.java
+END
+ParameterList.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn/numax/!svn/ver/3996/nms/com.genew.nms/nms/tr069-interfaces/src/main/java/com/genew/nms/tr069/model/struct/ParameterList.java
+END
+DeviceId.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn/numax/!svn/ver/3922/nms/com.genew.nms/nms/tr069-interfaces/src/main/java/com/genew/nms/tr069/model/struct/DeviceId.java
+END
+FaultStruct.java
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svn/numax/!svn/ver/3719/nms/com.genew.nms/nms/tr069-interfaces/src/main/java/com/genew/nms/tr069/model/struct/FaultStruct.java
+END
+Event.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/numax/!svn/ver/3719/nms/com.genew.nms/nms/tr069-interfaces/src/main/java/com/genew/nms/tr069/model/struct/Event.java
+END
+ParameterValueStructBoolean.java
+K 25
+svn:wc:ra_dav:version-url
+V 143
+/svn/numax/!svn/ver/3719/nms/com.genew.nms/nms/tr069-interfaces/src/main/java/com/genew/nms/tr069/model/struct/ParameterValueStructBoolean.java
+END
+ParameterValueStruct.java
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/svn/numax/!svn/ver/3746/nms/com.genew.nms/nms/tr069-interfaces/src/main/java/com/genew/nms/tr069/model/struct/ParameterValueStruct.java
+END
+EventStruct.java
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svn/numax/!svn/ver/3719/nms/com.genew.nms/nms/tr069-interfaces/src/main/java/com/genew/nms/tr069/model/struct/EventStruct.java
+END
+ParameterValueStructUnsignedInt.java
+K 25
+svn:wc:ra_dav:version-url
+V 147
+/svn/numax/!svn/ver/3719/nms/com.genew.nms/nms/tr069-interfaces/src/main/java/com/genew/nms/tr069/model/struct/ParameterValueStructUnsignedInt.java
+END
+ParameterValueStructInt.java
+K 25
+svn:wc:ra_dav:version-url
+V 139
+/svn/numax/!svn/ver/3719/nms/com.genew.nms/nms/tr069-interfaces/src/main/java/com/genew/nms/tr069/model/struct/ParameterValueStructInt.java
+END

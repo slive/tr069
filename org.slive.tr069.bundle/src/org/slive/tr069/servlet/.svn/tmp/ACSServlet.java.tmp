@@ -1,0 +1,303 @@
+/*
+ * Class name       : ACSServlet
+ * Create Date     : 2010-5-19
+ * 
+ * Author          : yangmingtao
+ * Company         : Genew Technologies
+ * Product Name    : NMS
+ * Product Version: 00.00.00
+ *
+ * Copyright (c) 2009-2010 Genew Technologies Co.,Ltd. All rights reserved.
+ */
+package com.genew.nms.tr069.servlet;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.w3c.dom.Document;
+
+import com.genew.nms.tr069.control.ACSProcessControl;
+import com.genew.nms.tr069.control.ACSProcessControlManager;
+import com.genew.nms.tr069.control.IResponseHandle;
+import com.genew.nms.tr069.control.ResponseParse;
+import com.genew.nms.tr069.model.AbstractMethod;
+import com.genew.nms.tr069.model.Inform;
+import com.genew.nms.tr069.model.InformResponse;
+import com.genew.nms.tr069.model.SoapMessageModel;
+import com.genew.nms.tr069.model.struct.EventStruct;
+import com.genew.nms.tr069.model.struct.ParameterList;
+
+public class ACSServlet extends HttpServlet
+{
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ACSServlet.class.getName());
+    private static final long serialVersionUID = 7701552490168024356L;
+    private static final String LastInform = "lastInform";
+    private String methodClassPath;				// 创建构造方法类的基路径
+    private String responseHandlePath;
+    private int maxEnvelopes;
+
+    public ACSServlet(String responseHandlePath)
+    {
+        if (responseHandlePath == null)
+        {
+            throw new NullPointerException();
+        }
+        this.responseHandlePath = responseHandlePath;
+        methodClassPath = AbstractMethod.class.getName();
+        methodClassPath = methodClassPath.substring(0, methodClassPath.lastIndexOf(".") + 1);
+    }
+
+    protected void processRequest(HttpServletRequest request,
+            HttpServletResponse response) throws ServletException, IOException
+    {
+<<<<<<< .mine
+    	response.setContentType("text/xml;charset=UTF-8");
+		response.setHeader("Cache-control", "no-cache");
+		response.setDateHeader("Date", System.currentTimeMillis());
+		
+		ServletOutputStream outStream = response.getOutputStream();
+		HttpSession session = request.getSession();
+		Object sessionAttr = session.getAttribute(LastInform);
+		Inform lastInform = null;
+		if (sessionAttr != null)
+		{
+			lastInform = (Inform) sessionAttr;
+		}
+		
+		ACSProcessControl acsPcl = null;
+		if (request.getContentLength() == 0)	// HttpPost，maxEnvelopes == 1是，代表一个事务执行的开始
+		{
+			if (lastInform != null)
+			{
+				acsPcl = ACSProcessControlManager.getInstance().
+					getProcessControl(lastInform.getDeviceId().getCpeId());
+				response.setContentLength(acsPcl.doACSEMethods(outStream));
+				outStream.flush();
+			}
+		} 
+		else 
+		{
+			SoapMessageModel soapMsg = null;
+			
+			// TODO 对于CPE发送条请求，如何处理？？？
+			// 执行解析，并将解析后需要调用的下一步方法压入队列中
+			try
+=======
+        response.setContentType("text/xml;charset=UTF-8");
+        response.setHeader("Cache-control", "no-cache");
+        response.setDateHeader("Date", System.currentTimeMillis());
+
+        ServletOutputStream outStream = response.getOutputStream();
+        HttpSession session = request.getSession();
+        Object sessionAttr = session.getAttribute(LastInform);
+        Inform lastInform = null;
+        if (sessionAttr != null)
+        {
+            lastInform = (Inform) sessionAttr;
+        }
+
+        ACSProcessControl acsPcl = null;
+        if (request.getContentLength() == 0)	// HttpPost，maxEnvelopes == 1是，代表一个事务执行的开始
+        {
+            if (lastInform != null)
+>>>>>>> .r3669
+            {
+                acsPcl = ACSProcessControlManager.getInstance().
+                        getProcessControl(lastInform.getDeviceId().getCpeId());
+                response.setContentLength(acsPcl.doACSEMethods(outStream));
+                outStream.flush();
+            }
+        }
+        else
+        {
+            SoapMessageModel soapMsg = null;
+
+            // TODO 对于CPE发送条请求，如何处理？？？
+            // 执行解析，并将解析后需要调用的下一步方法压入队列中
+            try
+            {
+                DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+                dbf.setNamespaceAware(true);
+                DocumentBuilder db = dbf.newDocumentBuilder();
+                Document doc = db.parse(request.getInputStream());
+                soapMsg = new SoapMessageModel(doc);
+            }
+            catch (Exception e)
+            {
+                LOGGER.error("Transfer Request message to XML error!", e);
+                throw new ServletException();
+            }
+            String reqname = AbstractMethod.getRequestName(soapMsg);
+            AbstractMethod requestMethod = null;
+            try
+            {
+                requestMethod = (AbstractMethod) Class.forName(methodClassPath + reqname).newInstance();
+            }
+            catch (Exception ex)
+            {
+                LOGGER.error("Create " + reqname + " error!", ex);
+                return;
+            }
+
+<<<<<<< .mine
+			try
+			{
+				requestMethod.parse(soapMsg);
+				if (requestMethod instanceof Inform) // 接收到Inform，需要进行特殊处理，回复InformResponse，并记录当前会话
+				{
+					lastInform = (Inform) requestMethod;
+					session.setAttribute(LastInform, lastInform);
+					EventStruct[] eventCodes = lastInform.getEvent().getEventCodes();
+					// TODO 处理事件eventCodes
+					
+					ParameterList parameterList = lastInform.getParameterList();
+					// TODO 处理parameter
+					
+					
+					acsPcl = ACSProcessControlManager.getInstance().getProcessControl(lastInform.getDeviceId().getCpeId());
+				    if (acsPcl == null)
+=======
+            try
+            {
+                requestMethod.parse(soapMsg);
+                if (requestMethod instanceof Inform) // 接收到Inform，需要进行特殊处理，回复InformResponse，并记录当前会话
+                {
+                    lastInform = (Inform) requestMethod;
+                    session.setAttribute(LastInform, lastInform);
+                    EventStruct[] eventCodes = lastInform.getEvent().getEventCodes();
+                    // TODO 处理事件eventCodes
+
+                    ParameterList parameterList = lastInform.getParameterList();
+                    // TODO 处理parameter
+
+
+                    acsPcl = ACSProcessControlManager.getInstance().getProcessControl(lastInform.getDeviceId().getCpeId());
+                    if (acsPcl == null)
+>>>>>>> .r3669
+                    {
+                        acsPcl = new ACSProcessControl(lastInform.getDeviceId().getCpeId());
+                        ACSProcessControlManager.getInstance().addProcessControl(acsPcl);
+                        IResponseHandle responseHandle = (IResponseHandle) Class.forName(responseHandlePath).newInstance();
+                        acsPcl.setResponseParse(new ResponseParse(responseHandle));
+                    }
+<<<<<<< .mine
+				    acsPcl.setDeviceInfor(lastInform);			// 缓存Inform，以备使用
+				    acsPcl.revAndConfirmMethod(requestMethod);	// 具体方法解析
+				    
+					InformResponse informResp = new InformResponse();
+					informResp.setRequestId(lastInform.getRequestId());
+					maxEnvelopes = lastInform.getMaxEnvelopes();		// 设置最大信包数
+					acsPcl.setMaxEnvelopes(maxEnvelopes);		// TODO 理论上由ACS自身确定的，此次根据CPE来决定
+					acsPcl.addACSResponseMethod(informResp);	// 将通知回复信包至于最前面
+				} 
+				else
+				{
+					// 具体方法解析
+					if(acsPcl != null)
+					{
+						acsPcl.revAndConfirmMethod(requestMethod);
+					}
+				}
+			} catch (Exception e)
+			{
+				LOGGER.error("Deal " + reqname + " method error! method={}",requestMethod,e);
+			}
+			}
+			
+			// 执行完解析后，开始执行回复方法
+			if (acsPcl != null)
+			{
+				ACSProcessControl processControl = ACSProcessControlManager.getInstance().
+					getProcessControl(lastInform.getDeviceId().getCpeId());
+				if(processControl != null)
+				{
+					response.setContentLength(acsPcl.doACSEMethods(outStream));
+					outStream.flush();
+				}
+			}
+=======
+                    acsPcl.setDeviceInfor(lastInform);	        // 缓存Inform，以备使用
+                    acsPcl.revAndConfirmMethod(requestMethod);	// 具体方法解析
+
+                    InformResponse informResp = new InformResponse();
+                    informResp.setRequestId(lastInform.getRequestId());
+                    maxEnvelopes = lastInform.getMaxEnvelopes();		// 设置最大信包数
+                    acsPcl.setMaxEnvelopes(maxEnvelopes);		// TODO 理论上由ACS自身确定的，此次根据CPE来决定
+                    acsPcl.addACSResponseMethod(informResp);	// 将通知回复信包至于最前面
+                }
+                else
+                {
+                    // 具体方法解析
+                    if (acsPcl != null)
+                    {
+                        acsPcl.revAndConfirmMethod(requestMethod);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                LOGGER.error("Deal " + reqname + " method error! method={}", requestMethod, e);
+            }
+        }
+
+        // 执行完解析后，开始执行回复方法
+        if (acsPcl != null)
+        {
+            ACSProcessControl processControl = ACSProcessControlManager.getInstance().
+                    getProcessControl(lastInform.getDeviceId().getCpeId());
+            if (processControl != null)
+            {
+                response.setContentLength(acsPcl.doACSEMethods(outStream));
+                outStream.flush();
+            }
+        }
+>>>>>>> .r3669
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request,
+            HttpServletResponse response) throws ServletException, IOException
+    {
+        processRequest(request, response);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request,
+            HttpServletResponse response) throws ServletException, IOException
+    {
+        processRequest(request, response);
+    }
+
+    /**
+     * Returns a short description of the ACSServlet.
+     */
+    @Override
+    public String getServletInfo()
+    {
+        return "Short description";
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException,
+            IOException
+    {
+        resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
+    }
+
+    @Override
+    public void destroy()
+    {
+    }
+}
